@@ -15,14 +15,14 @@ class AllProduct extends StatefulWidget {
 }
 
 class _AllProductState extends State<AllProduct> {
-  List<ProductMenModel> shirtProductMenModels = List();
-  List<Widget> shirtWidgets = List();
+  List<ProductMenModel> shirtProductMenModels = [];
+  List<Widget> shirtWidgets = [];
 
-  List<ProductMenModel> hatProductMenModels = List();
-  List<Widget> hatWidgets = List();
+  List<ProductMenModel> hatProductMenModels = [];
+  List<Widget> hatWidgets = [];
 
-  List<ProductMenModel> bagProductMenModels = List();
-  List<Widget> bagWidgets = List();
+  List<ProductMenModel> bagProductMenModels = [];
+  List<Widget> bagWidgets = [];
 
   @override
   void initState() {
@@ -88,7 +88,7 @@ class _AllProductState extends State<AllProduct> {
     ProductMenModel model,
     int amountInt,
   ) async {
-    String uidshop, nameshop, nameproduct, price, amount, sum;
+    String? uidshop, nameshop, nameproduct, price, amount, sum;
     uidshop = model.uid;
 
     await Firebase.initializeApp().then((value) async {
@@ -97,7 +97,7 @@ class _AllProductState extends State<AllProduct> {
           .doc(uidshop)
           .snapshots()
           .listen((event) async {
-        ProfileModel profileModel = ProfileModel.fromMap(event.data());
+        ProfileModel profileModel = ProfileModel.fromMap(event.data()!);
         if (profileModel.name != null) {
           nameshop = profileModel.name;
         } else {
@@ -108,7 +108,7 @@ class _AllProductState extends State<AllProduct> {
         price = model.detail;
         amount = amountInt.toString();
 
-        int sumInt = amountInt * int.parse(price.trim());
+        int sumInt = amountInt * int.parse(price!.trim());
         sum = sumInt.toString();
 
         print(
@@ -123,7 +123,7 @@ class _AllProductState extends State<AllProduct> {
 
         await SQLiteHelper()
             .insertData(orderSQLiteModel)
-            .then((value) => print('Success Insert SQLite'));
+            .then(((value) => print('Success Insert SQLite')));
       });
     });
   }
@@ -136,13 +136,13 @@ class _AllProductState extends State<AllProduct> {
         builder: (context, setState) => SimpleDialog(
           title: ListTile(
             leading: CachedNetworkImage(
-              imageUrl: model.pathImage,
+              imageUrl: model.pathImage!,
               placeholder: (context, url) => MyStyle().showProgress(),
               errorWidget: (context, url, error) => Image(
                 image: AssetImage('images/pic.png'),
               ),
             ),
-            title: MyStyle().titleH1(model.name),
+            title: MyStyle().titleH1(model.name!),
             subtitle: MyStyle().titleH3('Price = ${model.detail} BHT'),
           ),
           children: [
@@ -226,7 +226,7 @@ class _AllProductState extends State<AllProduct> {
                 width: MediaQuery.of(context).size.width * 0.4 - 20,
                 height: MediaQuery.of(context).size.width * 0.4 - 10,
                 child: CachedNetworkImage(
-                  imageUrl: productMenModel.pathImage,
+                  imageUrl: productMenModel.pathImage!,
                   placeholder: (context, url) => MyStyle().showProgress(),
                   errorWidget: (context, url, error) => Image(
                     image: AssetImage('images/pic.png'),
@@ -262,7 +262,7 @@ class _AllProductState extends State<AllProduct> {
                       '${productMenModel.detail}',
                       style: Theme.of(context)
                           .textTheme
-                          .button
+                          .button!
                           .copyWith(color: MyStyle().darkColor),
                     )
                   ],
@@ -421,7 +421,7 @@ Container buildShirt(Size size, BuildContext context) {
                 '\499 Bath',
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: MyStyle().darkColor),
               )
             ],
@@ -473,7 +473,7 @@ Container buildShirt2(Size size, BuildContext context) {
                 '\99 Bath',
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: MyStyle().darkColor),
               )
             ],
@@ -525,7 +525,7 @@ Container buildShirt3(Size size, BuildContext context) {
                 '\400 Bath',
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: MyStyle().darkColor),
               )
             ],
@@ -577,7 +577,7 @@ Container buildShirt4(Size size, BuildContext context) {
                 '\150 Bath',
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: MyStyle().darkColor),
               )
             ],
@@ -629,7 +629,7 @@ Container buildHat1(Size size, BuildContext context) {
                 '\199 Bath',
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: MyStyle().darkColor),
               )
             ],
@@ -681,7 +681,7 @@ Container buildHat2(Size size, BuildContext context) {
                 '\299 Bath',
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: MyStyle().darkColor),
               )
             ],
@@ -733,7 +733,7 @@ Container buildHat3(Size size, BuildContext context) {
                 '\199 Bath',
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: MyStyle().darkColor),
               )
             ],
@@ -785,7 +785,7 @@ Container buildHat4(Size size, BuildContext context) {
                 '\199 Bath',
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: MyStyle().darkColor),
               )
             ],
@@ -837,7 +837,7 @@ Container buildBag1(Size size, BuildContext context) {
                 '\199 Bath',
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: MyStyle().darkColor),
               )
             ],
@@ -889,7 +889,7 @@ Container buildBag2(Size size, BuildContext context) {
                 '\999 Bath',
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: MyStyle().darkColor),
               )
             ],
@@ -941,7 +941,7 @@ Container buildBag3(Size size, BuildContext context) {
                 '\500 Bath',
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: MyStyle().darkColor),
               )
             ],
@@ -993,7 +993,7 @@ Container buildBag4(Size size, BuildContext context) {
                 '\1299 Bath',
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: MyStyle().darkColor),
               )
             ],
@@ -1145,7 +1145,7 @@ Container buildHeader(Size size, BuildContext context) {
                 'Welcome To Shopping',
                 style: Theme.of(context)
                     .textTheme
-                    .headline5
+                    .headline5!
                     .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ],

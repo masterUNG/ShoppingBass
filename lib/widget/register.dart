@@ -5,16 +5,16 @@ import 'package:shoppingproject/utility/dialog.dart';
 import 'package:shoppingproject/utility/my_style.dart';
 
 class Register extends StatefulWidget {
-  Register({Key key}) : super(key: key);
+  Register({Key? key}) : super(key: key);
 
   @override
   _RegisterState createState() => _RegisterState();
 }
 
 class _RegisterState extends State<Register> {
-  double screen;
+  late double screen;
   bool statusRedEye = true;
-  String name, email, password, phone;
+  String? name, email, password, phone;
 
   Container buildName() {
     return Container(
@@ -205,10 +205,10 @@ class _RegisterState extends State<Register> {
     await Firebase.initializeApp().then((value) async {
       print('######### Firebase Initialize Success#########');
       await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password)
+          .createUserWithEmailAndPassword(email: email!, password: password!)
           .then((value) async {
         print('Register Success');
-        await value.user.updateProfile(displayName: name).then((value) =>
+        await value.user!.updateProfile(displayName: name).then((value) =>
             Navigator.pushNamedAndRemoveUntil(
                 context, '/myHome', (route) => false));
       }).catchError((value) {

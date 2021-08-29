@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -10,20 +9,20 @@ import 'package:shoppingproject/utility/my_style.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 
 class Authen extends StatefulWidget {
-  Authen({Key key}) : super(key: key);
+  Authen({Key? key}) : super(key: key);
 
   @override
   _AuthenState createState() => _AuthenState();
 }
 
 class _AuthenState extends State<Authen> {
-  double screen;
+  late double screen;
   bool statusRedEye = true;
   bool _isLogin = false;
-  String email, password;
+  String? email, password;
   FirebaseAuth _auth = FirebaseAuth.instance;
-  FacebookLogin _facebookLogin = FacebookLogin();
-  User _user;
+  // FacebookLogin _facebookLogin = FacebookLogin();
+  User? _user;
 
   @override
   Widget build(BuildContext context) {
@@ -149,34 +148,34 @@ class _AuthenState extends State<Authen> {
       );
 
   Future _handleLogin() async {
-    FacebookLoginResult _result = await _facebookLogin.logIn(['email']);
-    switch (_result.status) {
-      case FacebookLoginStatus.cancelledByUser:
-        print("cancelledByUser");
-        break;
-      case FacebookLoginStatus.error:
-        print("error");
-        break;
-      case FacebookLoginStatus.loggedIn:
-        await _loginWithFacebook(_result);
-        break;
-      default:
-    }
+    // FacebookLoginResult _result = await _facebookLogin.logIn(['email']);
+    // switch (_result.status) {
+    //   case FacebookLoginStatus.cancelledByUser:
+    //     print("cancelledByUser");
+    //     break;
+    //   case FacebookLoginStatus.error:
+    //     print("error");
+    //     break;
+    //   case FacebookLoginStatus.loggedIn:
+    //     await _loginWithFacebook(_result);
+    //     break;
+    //   default:
+    // }
   }
 
-  Future _loginWithFacebook(FacebookLoginResult _result) async {
-    FacebookAccessToken _accessToken = _result.accessToken;
-    AuthCredential _credential =
-        FacebookAuthProvider.credential(_accessToken.token);
-    var a = await _auth.signInWithCredential(_credential);
-    setState(() {
-      _isLogin = true;
-      _user = a.user;
-    });
-    await _auth.signInWithCredential(_credential).then((value) =>
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/myHome', (route) => false));
-  }
+  // Future _loginWithFacebook(FacebookLoginResult _result) async {
+  //   FacebookAccessToken _accessToken = _result.accessToken;
+  //   AuthCredential _credential =
+  //       FacebookAuthProvider.credential(_accessToken.token);
+  //   var a = await _auth.signInWithCredential(_credential);
+  //   setState(() {
+  //     _isLogin = true;
+  //     _user = a.user;
+  //   });
+  //   await _auth.signInWithCredential(_credential).then((value) =>
+  //       Navigator.pushNamedAndRemoveUntil(
+  //           context, '/myHome', (route) => false));
+  // }
 
   Container buildSignInGoogle() => Container(
         margin: EdgeInsets.only(top: 8),
@@ -200,7 +199,7 @@ class _AuthenState extends State<Authen> {
 
     await Firebase.initializeApp().then((value) async {
       await _googleSignIn.signIn().then((value) async {
-        String name = value.displayName;
+        String? name = value!.displayName;
         String email = value.email;
         await value.authentication.then((value2) async {
           AuthCredential authCredential = GoogleAuthProvider.credential(
@@ -335,7 +334,7 @@ class _AuthenState extends State<Authen> {
   Future<Null> checkAuthen() async {
     await Firebase.initializeApp().then((value) async {
       await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password)
+          .signInWithEmailAndPassword(email: email!, password: password!)
           .then((value) => Navigator.pushNamedAndRemoveUntil(
               context, '/myHome', (route) => false))
           .catchError(

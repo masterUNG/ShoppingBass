@@ -12,7 +12,7 @@ class ShowProfileUser extends StatefulWidget {
 }
 
 class _ShowProfileUserState extends State<ShowProfileUser> {
-  ProfileModel profileModel;
+  ProfileModel? profileModel;
   bool statusLoad = true;
 
   @override
@@ -25,7 +25,7 @@ class _ShowProfileUserState extends State<ShowProfileUser> {
   Future<Null> readProfile() async {
     await Firebase.initializeApp().then((value) async {
       await FirebaseAuth.instance.authStateChanges().listen((event) async {
-        String uid = event.uid;
+        String uid = event!.uid;
         print('uid ==>> $uid');
         await FirebaseFirestore.instance
             .collection('profile')
@@ -34,7 +34,7 @@ class _ShowProfileUserState extends State<ShowProfileUser> {
             .listen((event) {
           setState(() {
             statusLoad = false;
-            profileModel = ProfileModel.fromMap(event.data());
+            profileModel = ProfileModel.fromMap(event.data()!);
           });
         });
       });
@@ -54,9 +54,9 @@ class _ShowProfileUserState extends State<ShowProfileUser> {
                 : Center(
                     child: Column(
                       children: [
-                        MyStyle().titleH1(profileModel.name),
-                        MyStyle().titleH2(profileModel.address),
-                        MyStyle().titleH2(profileModel.phone),
+                        MyStyle().titleH1(profileModel!.name!),
+                        MyStyle().titleH2(profileModel!.address!),
+                        MyStyle().titleH2(profileModel!.phone!),
                         buildMap(),
                       ],
                     ),
@@ -67,8 +67,8 @@ class _ShowProfileUserState extends State<ShowProfileUser> {
     return [
       Marker(
         markerId: MarkerId('id'),
-        position: LatLng(profileModel.lat, profileModel.lng),
-        infoWindow: InfoWindow(title: 'You are Here ?', snippet: 'lat = ${profileModel.lat} lng = ${profileModel.lng}')
+        position: LatLng(profileModel!.lat!, profileModel!.lng!),
+        infoWindow: InfoWindow(title: 'You are Here ?', snippet: 'lat = ${profileModel!.lat} lng = ${profileModel!.lng}')
       ),
     ].toSet();
   }
@@ -78,7 +78,7 @@ class _ShowProfileUserState extends State<ShowProfileUser> {
           padding: const EdgeInsets.all(16.0),
           child: GoogleMap(
             initialCameraPosition: CameraPosition(
-              target: LatLng(profileModel.lat, profileModel.lng),
+              target: LatLng(profileModel!.lat!, profileModel!.lng!),
               zoom: 16,
             ),
             onMapCreated: (controller) {},

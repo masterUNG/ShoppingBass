@@ -8,17 +8,17 @@ import 'package:shoppingproject/utility/my_style.dart';
 import 'package:shoppingproject/utility/sqlitehelper.dart';
 
 class ShowCart extends StatefulWidget {
-  ShowCart({Key key}) : super(key: key);
+  ShowCart({Key? key}) : super(key: key);
 
   @override
   _ShowCartState createState() => _ShowCartState();
 }
 
 class _ShowCartState extends State<ShowCart> {
-  List<OrderSQLiteModel> orderSQLiteModels = List();
+  List<OrderSQLiteModel> orderSQLiteModels = [];
 
   bool statusLoad = true;
-  int total;
+  int? total;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _ShowCartState extends State<ShowCart> {
     await SQLiteHelper().readData().then((value) {
       for (var item in value) {
         setState(() {
-          total = total + int.parse(item.sum);
+          total = total! + int.parse(item.sum!);
         });
       }
 
@@ -75,8 +75,8 @@ class _ShowCartState extends State<ShowCart> {
   Future<Null> orderProduct() async {
     await Firebase.initializeApp().then((value) async {
       await FirebaseAuth.instance.authStateChanges().listen((event) async {
-        String uidBuyer = event.uid;
-        String nameBuyer = event.displayName;
+        String uidBuyer = event!.uid;
+        String? nameBuyer = event.displayName;
         DateTime dateTime = DateTime.now();
         Timestamp timestamp = Timestamp.fromDate(dateTime);
         print('datatime =$dateTime, timestamp ==> $timestamp');
@@ -174,12 +174,12 @@ class _ShowCartState extends State<ShowCart> {
       physics: ScrollPhysics(),
       itemCount: orderSQLiteModels.length,
       itemBuilder: (context, index) => Dismissible(
-        key: Key(orderSQLiteModels[index].uidshop),
+        key: Key(orderSQLiteModels[index].uidshop!),
         onDismissed: (direction) async {
           print('dismiss at id ==>> ${orderSQLiteModels[index].id}');
           await SQLiteHelper()
               .deleteDataWhereId(orderSQLiteModels[index].id)
-              .then((value) => readCart());
+              .then(((value) => readCart()));
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -187,23 +187,23 @@ class _ShowCartState extends State<ShowCart> {
             children: [
               Expanded(
                 flex: 2,
-                child: Text(orderSQLiteModels[index].nameproduct),
+                child: Text(orderSQLiteModels[index].nameproduct!),
               ),
               Expanded(
                 flex: 2,
-                child: Text(orderSQLiteModels[index].nameshop),
+                child: Text(orderSQLiteModels[index].nameshop!),
               ),
               Expanded(
                 flex: 1,
-                child: Text(orderSQLiteModels[index].price),
+                child: Text(orderSQLiteModels[index].price!),
               ),
               Expanded(
                 flex: 1,
-                child: Text(orderSQLiteModels[index].amount),
+                child: Text(orderSQLiteModels[index].amount!),
               ),
               Expanded(
                 flex: 1,
-                child: Text(orderSQLiteModels[index].sum),
+                child: Text(orderSQLiteModels[index].sum!),
               ),
             ],
           ),

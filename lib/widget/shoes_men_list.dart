@@ -44,10 +44,10 @@ class _ShoesMenListState extends State<ShoesMenList> {
       Column(
         children: [
           Container(
-            width: 160, child: Image.network(model.pathImage),
+            width: 160, child: Image.network(model.pathImage!),
             
           ),
-          Text(model.name),
+          Text(model.name!),
         ],
       );
 

@@ -6,7 +6,7 @@ import 'package:shoppingproject/models/order_firebase_model.dart';
 import 'package:shoppingproject/utility/my_style.dart';
 
 class ShowOderCustomer extends StatefulWidget {
-  ShowOderCustomer({Key key}) : super(key: key);
+  ShowOderCustomer({Key? key}) : super(key: key);
 
   @override
   _ShowOderCustomerState createState() => _ShowOderCustomerState();
@@ -14,9 +14,9 @@ class ShowOderCustomer extends StatefulWidget {
 
 class _ShowOderCustomerState extends State<ShowOderCustomer> {
   bool statusLoad = true;
-  List<OrderFirebaseModel> orderFirebaseModels = List();
-  String uidLogin;
-  List<String> docs = List();
+  List<OrderFirebaseModel> orderFirebaseModels = [];
+  String? uidLogin;
+  List<String> docs = [];
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _ShowOderCustomerState extends State<ShowOderCustomer> {
     docs.clear();
     await Firebase.initializeApp().then((value) async {
       await FirebaseAuth.instance.authStateChanges().listen((event) async {
-        uidLogin = event.uid;
+        uidLogin = event!.uid;
         await FirebaseFirestore.instance
             .collection('profile')
             .doc(event.uid)
@@ -92,23 +92,23 @@ class _ShowOderCustomerState extends State<ShowOderCustomer> {
               children: [
                 Expanded(
                   flex: 2,
-                  child: Text(orderFirebaseModels[index].nameproduct),
+                  child: Text(orderFirebaseModels[index].nameproduct!),
                 ),
                 Expanded(
                   flex: 2,
-                  child: Text(orderFirebaseModels[index].namebuyer),
+                  child: Text(orderFirebaseModels[index].namebuyer!),
                 ),
                 Expanded(
                   flex: 1,
-                  child: Text(orderFirebaseModels[index].price),
+                  child: Text(orderFirebaseModels[index].price!),
                 ),
                 Expanded(
                   flex: 1,
-                  child: Text(orderFirebaseModels[index].amount),
+                  child: Text(orderFirebaseModels[index].amount!),
                 ),
                 Expanded(
                   flex: 1,
-                  child: Text(orderFirebaseModels[index].sum),
+                  child: Text(orderFirebaseModels[index].sum!),
                 ),
                 Expanded(
                   flex: 1,
@@ -122,8 +122,8 @@ class _ShowOderCustomerState extends State<ShowOderCustomer> {
     );
   }
 
-  Widget buildStatus(String string) {
-    Color color;
+  Widget buildStatus(String? string) {
+    Color? color;
     switch (string) {
       case 'Order':
         color = Colors.red;
@@ -135,7 +135,7 @@ class _ShowOderCustomerState extends State<ShowOderCustomer> {
     }
     return Container(
       decoration: BoxDecoration(color: color),
-      child: Text(string),
+      child: Text(string!),
     );
   }
 }

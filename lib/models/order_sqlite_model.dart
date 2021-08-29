@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 class OrderSQLiteModel {
-  final int id;
-  final String uidshop;
-  final String nameshop;
-  final String nameproduct;
-  final String price;
-  final String amount;
-  final String sum;
+  final int? id;
+  final String? uidshop;
+  final String? nameshop;
+  final String? nameproduct;
+  final String? price;
+  final String? amount;
+  final String? sum;
   OrderSQLiteModel({
     this.id,
     this.uidshop,
@@ -17,16 +17,15 @@ class OrderSQLiteModel {
     this.amount,
     this.sum,
   });
-  
 
   OrderSQLiteModel copyWith({
-    int id,
-    String uidshop,
-    String nameshop,
-    String nameproduct,
-    String price,
-    String amount,
-    String sum,
+    int? id,
+    String? uidshop,
+    String? nameshop,
+    String? nameproduct,
+    String? price,
+    String? amount,
+    String? sum,
   }) {
     return OrderSQLiteModel(
       id: id ?? this.id,
@@ -52,8 +51,6 @@ class OrderSQLiteModel {
   }
 
   factory OrderSQLiteModel.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-  
     return OrderSQLiteModel(
       id: map['id'],
       uidshop: map['uidshop'],
@@ -75,17 +72,17 @@ class OrderSQLiteModel {
   }
 
   @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
   
-    return o is OrderSQLiteModel &&
-      o.id == id &&
-      o.uidshop == uidshop &&
-      o.nameshop == nameshop &&
-      o.nameproduct == nameproduct &&
-      o.price == price &&
-      o.amount == amount &&
-      o.sum == sum;
+    return other is OrderSQLiteModel &&
+      other.id == id &&
+      other.uidshop == uidshop &&
+      other.nameshop == nameshop &&
+      other.nameproduct == nameproduct &&
+      other.price == price &&
+      other.amount == amount &&
+      other.sum == sum;
   }
 
   @override

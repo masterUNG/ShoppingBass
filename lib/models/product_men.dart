@@ -1,11 +1,10 @@
 import 'dart:convert';
 
 class ProductMenModel {
-
-  final String name;
-  final String detail;
-  final String pathImage;
-  final String uid;
+  final String? name;
+  final String? detail;
+  final String? pathImage;
+  final String? uid;
   ProductMenModel({
     this.name,
     this.detail,
@@ -14,10 +13,10 @@ class ProductMenModel {
   });
 
   ProductMenModel copyWith({
-    String name,
-    String detail,
-    String pathImage,
-    String uid,
+    String? name,
+    String? detail,
+    String? pathImage,
+    String? uid,
   }) {
     return ProductMenModel(
       name: name ?? this.name,
@@ -37,8 +36,6 @@ class ProductMenModel {
   }
 
   factory ProductMenModel.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-  
     return ProductMenModel(
       name: map['name'],
       detail: map['detail'],
@@ -57,14 +54,14 @@ class ProductMenModel {
   }
 
   @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
   
-    return o is ProductMenModel &&
-      o.name == name &&
-      o.detail == detail &&
-      o.pathImage == pathImage &&
-      o.uid == uid;
+    return other is ProductMenModel &&
+      other.name == name &&
+      other.detail == detail &&
+      other.pathImage == pathImage &&
+      other.uid == uid;
   }
 
   @override

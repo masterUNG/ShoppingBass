@@ -14,10 +14,10 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  ProfileModel profileModel;
-  String displayName, uid, address, phone;
+  ProfileModel? profileModel;
+  String? displayName, uid, address, phone;
 
-  Position userLocation;
+  Position? userLocation;
 
   @override
   void initState() {
@@ -28,12 +28,12 @@ class _EditProfileState extends State<EditProfile> {
       setState(() {
         userLocation = value;
         print(
-            'lat = ${userLocation.latitude}, lag = ${userLocation.longitude}');
+            'lat = ${userLocation!.latitude}, lag = ${userLocation!.longitude}');
       });
     });
   }
 
-  Future<Position> findPosition() async {
+  Future<Position?> findPosition() async {
     var position;
     try {
       position = await Geolocator.getCurrentPosition();
@@ -46,7 +46,7 @@ class _EditProfileState extends State<EditProfile> {
   Future<Null> readProfile() async {
     await Firebase.initializeApp().then((value) async {
       await FirebaseAuth.instance.authStateChanges().listen((event) async {
-        uid = event.uid;
+        uid = event!.uid;
         setState(() {
           displayName = event.displayName;
         });
@@ -69,7 +69,7 @@ class _EditProfileState extends State<EditProfile> {
           : Center(
               child: Column(
                 children: [
-                  MyStyle().titleH1(displayName),
+                  MyStyle().titleH1(displayName!),
                   buildAddress(),
                   buildPhone(),
                   buildMap(),
@@ -87,8 +87,8 @@ class _EditProfileState extends State<EditProfile> {
         name: displayName,
         address: address,
         phone: phone,
-        lat: userLocation.latitude,
-        lng: userLocation.longitude,
+        lat: userLocation!.latitude,
+        lng: userLocation!.longitude,
       );
 
       Map<String, dynamic> map = model.toMap();
@@ -108,11 +108,11 @@ class _EditProfileState extends State<EditProfile> {
     return <Marker>[
       Marker(
           markerId: MarkerId('idUser'),
-          position: LatLng(userLocation.latitude, userLocation.longitude),
+          position: LatLng(userLocation!.latitude, userLocation!.longitude),
           infoWindow: InfoWindow(
               title: 'You Here ?',
               snippet:
-                  'lat = ${userLocation.latitude}, lng = ${userLocation.longitude}')),
+                  'lat = ${userLocation!.latitude}, lng = ${userLocation!.longitude}')),
     ].toSet();
   }
 
@@ -125,7 +125,7 @@ class _EditProfileState extends State<EditProfile> {
                   child: GoogleMap(
                     initialCameraPosition: CameraPosition(
                       target:
-                          LatLng(userLocation.latitude, userLocation.longitude),
+                          LatLng(userLocation!.latitude, userLocation!.longitude),
                       zoom: 16,
                     ),
                     onMapCreated: (controller) {},

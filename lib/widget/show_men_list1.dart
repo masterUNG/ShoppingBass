@@ -7,7 +7,7 @@ class ShowMenList extends StatefulWidget {
 }
 
 class _ShowMenListState extends State<ShowMenList> {
-  double screen;
+  double? screen;
 
   @override
   Widget build(BuildContext context) {

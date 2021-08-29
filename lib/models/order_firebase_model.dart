@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderFirebaseModel {
-  final String amount;
-  final Timestamp timestamp; 
-  final String namebuyer;
-  final String nameproduct;
-  final String price;
-  final String status;
-  final String sum;
-  final String uidbuyer;
+  final String? amount;
+  final Timestamp? timestamp;
+  final String? namebuyer;
+  final String? nameproduct;
+  final String? price;
+  final String? status;
+  final String? sum;
+  final String? uidbuyer;
   OrderFirebaseModel({
     this.amount,
     this.timestamp,
@@ -23,14 +23,14 @@ class OrderFirebaseModel {
   });
 
   OrderFirebaseModel copyWith({
-    String amount,
-    Timestamp timestamp,
-    String namebuyer,
-    String nameproduct,
-    String price,
-    String status,
-    String sum,
-    String uidbuyer,
+    String? amount,
+    Timestamp? timestamp,
+    String? namebuyer,
+    String? nameproduct,
+    String? price,
+    String? status,
+    String? sum,
+    String? uidbuyer,
   }) {
     return OrderFirebaseModel(
       amount: amount ?? this.amount,
@@ -58,11 +58,9 @@ class OrderFirebaseModel {
   }
 
   factory OrderFirebaseModel.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-  
     return OrderFirebaseModel(
       amount: map['amount'],
-      timestamp: map['timestamp'],
+      timestamp: Timestamp.fromDate(map['timestamp']),
       namebuyer: map['namebuyer'],
       nameproduct: map['nameproduct'],
       price: map['price'],
@@ -82,18 +80,18 @@ class OrderFirebaseModel {
   }
 
   @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
   
-    return o is OrderFirebaseModel &&
-      o.amount == amount &&
-      o.timestamp == timestamp &&
-      o.namebuyer == namebuyer &&
-      o.nameproduct == nameproduct &&
-      o.price == price &&
-      o.status == status &&
-      o.sum == sum &&
-      o.uidbuyer == uidbuyer;
+    return other is OrderFirebaseModel &&
+      other.amount == amount &&
+      other.timestamp == timestamp &&
+      other.namebuyer == namebuyer &&
+      other.nameproduct == nameproduct &&
+      other.price == price &&
+      other.status == status &&
+      other.sum == sum &&
+      other.uidbuyer == uidbuyer;
   }
 
   @override

@@ -42,7 +42,7 @@ class SQLiteHelper {
 
   Future<List<OrderSQLiteModel>> readData()async{
     Database database = await connectedDatabase();
-    List<OrderSQLiteModel> models = List();
+    List<OrderSQLiteModel> models = [];
     List<Map<String, dynamic>> maps = await database.query(tabledatabase);
     for (var item in maps) {
       OrderSQLiteModel model = OrderSQLiteModel.fromMap(item);
@@ -51,7 +51,7 @@ class SQLiteHelper {
     return models;
   }
 
-  Future<Null> deleteDataWhereId(int id)async{
+  Future<Null> deleteDataWhereId(int? id)async{
     Database database = await connectedDatabase();
     try {
       await database.delete(tabledatabase, where: '$colId = $id');

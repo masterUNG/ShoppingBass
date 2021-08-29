@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 class ProfileModel {
-  final String name;
-  final String address;
-  final String phone;
-  final double lat;
-  final double lng;
-  final String token;
+  final String? name;
+  final String? address;
+  final String? phone;
+  final double? lat;
+  final double? lng;
+  final String? token;
   ProfileModel({
     this.name,
     this.address,
@@ -17,12 +17,12 @@ class ProfileModel {
   });
 
   ProfileModel copyWith({
-    String name,
-    String address,
-    String phone,
-    double lat,
-    double lng,
-    String token,
+    String? name,
+    String? address,
+    String? phone,
+    double? lat,
+    double? lng,
+    String? token,
   }) {
     return ProfileModel(
       name: name ?? this.name,

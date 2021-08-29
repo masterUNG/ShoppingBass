@@ -14,8 +14,8 @@ class AddListProduct extends StatefulWidget {
 }
 
 class _AddListProductState extends State<AddListProduct> {
-  File file;
-  String name, detail, urlPicture;
+  File? file;
+  String? name, detail, urlPicture;
 
   Widget uploadButtom() {
     return Column(
@@ -32,9 +32,9 @@ class _AddListProductState extends State<AddListProduct> {
                 showAlert(
                     'Non Choose Picture', 'Please Clicl Camera or Gallery');
               } else if (name == null ||
-                  name.isEmpty ||
+                  name!.isEmpty ||
                   detail == null ||
-                  detail.isEmpty) {
+                  detail!.isEmpty) {
                 showAlert('Havp Space', 'Please Fill Every Blank');
               } else {
                 uploadPictureToStorage();
@@ -61,7 +61,7 @@ class _AddListProductState extends State<AddListProduct> {
     FirebaseStorage firebaseStorage = FirebaseStorage.instance;
     Reference reference =
         firebaseStorage.ref().child('productmen/product$i.jpg');
-    UploadTask uploadTask = reference.putFile(file);
+    UploadTask uploadTask = reference.putFile(file!);
 
     urlPicture =
         await (await uploadTask.whenComplete(() => null)).ref.getDownloadURL();
@@ -160,7 +160,7 @@ class _AddListProductState extends State<AddListProduct> {
       );
 
       setState(() {
-        file = File(object.path);
+        file = File(object!.path);
       });
     } catch (e) {}
   }
@@ -192,7 +192,7 @@ class _AddListProductState extends State<AddListProduct> {
       padding: EdgeInsets.all(20.0),
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.3,
-      child: file == null ? Image.asset('images/pic.png') : Image.file(file),
+      child: file == null ? Image.asset('images/pic.png') : Image.file(file!),
     );
   }
 

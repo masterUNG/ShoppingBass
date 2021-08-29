@@ -10,7 +10,7 @@ class BagMenProduct extends StatefulWidget {
 }
 
 class _BagMenProductState extends State<BagMenProduct> {
-  double screen;
+  late double screen;
   List<Widget> widgets = [];
   
 
@@ -52,7 +52,7 @@ class _BagMenProductState extends State<BagMenProduct> {
             children: [
               Container(
                 width: screen*0.33,
-                child: Image.network(model.pathImage)
+                child: Image.network(model.pathImage!)
               ),
               Container(padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -71,7 +71,7 @@ class _BagMenProductState extends State<BagMenProduct> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: (model.name).toUpperCase(),
+                          text: model.name!.toUpperCase(),
                           style: Theme.of(context).textTheme.button,
                         ),
                       ],
@@ -79,10 +79,10 @@ class _BagMenProductState extends State<BagMenProduct> {
                   ),
                   Spacer(),
                   Text(
-                    (model.detail),
+                    model.detail!,
                     style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: MyStyle().darkColor),
                   )
                 ],

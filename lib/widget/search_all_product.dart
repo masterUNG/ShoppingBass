@@ -7,7 +7,7 @@ import 'package:shoppingproject/models/product_men.dart';
 import 'package:shoppingproject/widget/show_progress.dart';
 
 class SearchAllProduct extends StatefulWidget {
-  const SearchAllProduct({Key key}) : super(key: key);
+  const SearchAllProduct({Key? key}) : super(key: key);
 
   @override
   _SearchAllProductState createState() => _SearchAllProductState();
@@ -111,7 +111,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
               debouncer.run(() {
                 setState(() {
                   searchProductModels =
-                      productModels.where((element) => (element.name.toLowerCase().contains(value.toLowerCase()))).toList();
+                      productModels.where((element) => (element.name!.toLowerCase().contains(value.toLowerCase()))).toList();
                 });
               });
             },
@@ -135,7 +135,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
               ),
               itemBuilder: (context, index) => Card(
                   child: Text(
-                searchProductModels[index].name,
+                searchProductModels[index].name!,
               )),
             ),
     );
@@ -143,16 +143,16 @@ class _SearchAllProductState extends State<SearchAllProduct> {
 }
 
 class Debouncer {
-  final int millisecond;
-  Timer timer;
-  VoidCallback callBack;
+  final int? millisecond;
+  Timer? timer;
+  VoidCallback? callBack;
 
   Debouncer({this.millisecond});
 
   run(VoidCallback callback) {
     if (timer != null) {
-      timer.cancel();
+      timer!.cancel();
     }
-    timer = Timer(Duration(milliseconds: millisecond), callback);
+    timer = Timer(Duration(milliseconds: millisecond!), callback);
   }
 }

@@ -16,7 +16,7 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> {
-  String name, email;
+  String? name, email;
   Widget currenWidget = AllProduct();
 
   @override
@@ -27,7 +27,7 @@ class _MyHomeState extends State<MyHome> {
 
   Future<Null> findToken(String uid) async {
     await Firebase.initializeApp().then((value) async {
-      FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+      FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
       await firebaseMessaging.getToken().then((value) async {
         print('### uid ที่ login อยู่ ==>> $uid');
         print('### token ==> $value');
@@ -48,7 +48,7 @@ class _MyHomeState extends State<MyHome> {
   Future<Null> findNameAnEmail() async {
     await Firebase.initializeApp().then((value) async {
       await FirebaseAuth.instance.authStateChanges().listen((event) {
-        String uid = event.uid;
+        String uid = event!.uid;
         findToken(uid);
         setState(() {
           name = event.displayName;
@@ -194,8 +194,8 @@ class _MyHomeState extends State<MyHome> {
         image: DecorationImage(
             image: AssetImage('images/wall.jpg'), fit: BoxFit.cover),
       ),
-      accountName: MyStyle().titleH2White(name == null ? 'Name' : name),
-      accountEmail: MyStyle().titleH2White(email == null ? 'Email' : email),
+      accountName: MyStyle().titleH2White(name == null ? 'Name' : name!),
+      accountEmail: MyStyle().titleH2White(email == null ? 'Email' : email!),
       currentAccountPicture: Image.asset('images/logo.png'),
     );
   }
